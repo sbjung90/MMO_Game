@@ -7,8 +7,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Google.Protobuf;
 using Google.Protobuf.Protocol;
+using Server.Game;
 using ServerCore;
-using static Google.Protobuf.Protocol.Person.Types;
 
 namespace Server
 {
@@ -23,22 +23,7 @@ namespace Server
 
 		static void Main(string[] args)
 		{
-			Person person = new Person()
-			{
-				Name = "Leon1004",
-				Id = 123,
-				Email = "leon1004@naver.com",
-				Phones = { new PhoneNumber { Number = "555-4321", Type = Person.Types.PhoneType.Home } }
-			};
-
-			ushort size = (ushort)person.CalculateSize();
-			byte[] sendBuffer = new byte[size + 4];
-			Array.Copy(BitConverter.GetBytes(size + 4), 0, sendBuffer, 0, sizeof(ushort));
-			ushort protocolId = 1;
-			Array.Copy(BitConverter.GetBytes(protocolId), 0, sendBuffer, 2, sizeof(ushort));
-			Array.Copy(person.ToByteArray(), 0, sendBuffer, 4, size);
-
-		
+			RoomManager.Instance.Add();
 
 			// DNS (Domain Name System)
 			string host = Dns.GetHostName();
