@@ -1,3 +1,4 @@
+using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,10 +36,10 @@ public class ArrowController : CreatureController
 
     protected override void UpdateIdle()
     {
-        if (_dir != MoveDir.None)
+        if (Dir != MoveDir.None)
         {
             Vector3Int destPos = CellPos;
-            switch (_dir)
+            switch (Dir)
             {
                 case MoveDir.Up:
                     destPos += Vector3Int.up;
@@ -80,14 +81,14 @@ public class ArrowController : CreatureController
 
     protected override void MoveToNextPos()
     {
-        if (_dir == MoveDir.None)
+        if (Dir == MoveDir.None)
         {
             State = CreatureState.Idle;
             return;
         }
 
         Vector3Int destPos = CellPos;
-        switch (_dir)
+        switch (Dir)
         {
             case MoveDir.Up:
                 destPos += Vector3Int.up;

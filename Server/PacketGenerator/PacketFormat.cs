@@ -32,7 +32,8 @@ class PacketManager
 	public Action<PacketSession, IMessage, ushort> CustomHandler {{ get; set; }}
 
 	public void Register()
-	{{{0}
+	{{
+{0}
 	}}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

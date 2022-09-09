@@ -30,7 +30,7 @@ namespace ServerCore
 
 				// 여기까지 왔으면 패킷 조립 가능
 				OnRecvPacket(new ArraySegment<byte>(buffer.Array, buffer.Offset, dataSize));
-
+				processLen += dataSize;
 				buffer = new ArraySegment<byte>(buffer.Array, buffer.Offset + dataSize, buffer.Count - dataSize);
 			}
 
@@ -107,10 +107,18 @@ namespace ServerCore
 			if (Interlocked.Exchange(ref _disconnected, 1) == 1)
 				return;
 
-			OnDisconnected(_socket.RemoteEndPoint);
-			_socket.Shutdown(SocketShutdown.Both);
-			_socket.Close();
-			Clear();
+			try
+            {
+                OnDisconnected(_socket.RemoteEndPoint);
+                _socket.Shutdown(SocketShutdown.Both);
+                _socket.Close();
+                Clear();
+            }
+			catch(Exception e)
+            {
+				Debug.Log($"Disconnect Failed {e}");
+			}
+
 		}
 
 		#region 네트워크 통신

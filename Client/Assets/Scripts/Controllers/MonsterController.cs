@@ -1,3 +1,4 @@
+using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,10 +27,10 @@ public class MonsterController : CreatureController
 
     public override CreatureState State
     {
-        get => _state;
+        get => PosInfo.State;
         set
         {
-            if (_state == value)
+            if (PosInfo.State == value)
                 return;
 
             base.State = value;
@@ -116,7 +117,7 @@ public class MonsterController : CreatureController
         Dir = GetDirFromVec(moveCellDir);
 
 
-        switch (_dir)
+        switch (Dir)
         {
             case MoveDir.Up:
                 destPos += Vector3Int.up;
